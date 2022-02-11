@@ -89,7 +89,7 @@ case class SubqueryBroadcastExec(
         val proj = UnsafeProjection.create(expr)
         val keyIter = iter.map(proj).map(_.copy())
 
-        val rows = keyIter.toArray[InternalRow].distinct
+        val rows = keyIter.toArray[InternalRow]
         val beforeBuild = System.nanoTime()
         longMetric("collectTime") += (beforeBuild - beforeCollect) / 1000000
         val dataSize = rows.map(_.asInstanceOf[UnsafeRow].getSizeInBytes).sum
